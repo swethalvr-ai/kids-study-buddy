@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <style>
+      body {
+        font-family: sans-serif;
+        background-color: #f0f7f4;
+        margin: 0;
+        padding: 20px;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        color: #1d9e75;
+      }
+
+      #chat-window {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        min-height: 300px;
+        margin: 20px 0;
+        border: 1px solid #c8e6d8;
+      }
+
+      #input-area {
+        display: flex;
+        gap: 10px;
+      }
+
+      #user-input {
+        flex: 1;
+        padding: 10px 16px;
+        border-radius: 20px;
+        border: 1px solid #c8e6d8;
+        font-size: 14px;
+        outline: none;
+      }
+
+      button {
+        background-color: #1d9e75;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      .user-message {
+        background-color: #1d9e75;
+        color: white;
+        border-radius: 18px 18px 0px 18px;
+        padding: 10px 16px;
+        margin: 8px 0;
+        max-width: 80%;
+        margin-left: auto;
+        text-align: right;
+      }
+
+      .buddy-message {
+        background-color: #e8f5f0;
+        color: #1a1a1a;
+        border-radius: 18px 18px 18px 0px;
+        padding: 10px 16px;
+        margin: 8px 0;
+        max-width: 80%;
+      }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Study Buddy</title>
+  </head>
+  <script>
+    let conversationHistory = [];
+    async function sendMessage() {
+      const input = document.getElementById("user-input");
+      const question = input.value.trim();
+      if (!question) return;
+
+      const chatWindow = document.getElementById("chat-window");
+      chatWindow.innerHTML += `<div class="user-message">${question}</div>`;
+      input.value = "";
+
+      conversationHistory.push({ role: "user", content: question });
+
+      const response = await fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: conversationHistory }),
+      });
+
+      const data = await response.json();
+      const formatted = data.answer.replace(/\*\*(.*?)\*\*/g, "<b>$1</b>");
+      chatWindow.innerHTML += `<div class="buddy-message">${formatted}</div>`;
+      conversationHistory.push({ role: "assistant", content: data.answer });
+    }
+  </script>
+  <body>
+    <h1>Study Buddy 📚</h1>
+    <p>Your friendly homework helper!</p>
+    <div id="chat-window">
+      <!-- messages will appear here -->
+    </div>
+
+    <div id="input-area">
+      <input
+        type="text"
+        id="user-input"
+        placeholder="Type your question here..."
+      />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </body>
+</html>
