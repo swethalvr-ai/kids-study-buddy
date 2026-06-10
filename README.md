@@ -70,3 +70,38 @@ node index.js
 
 **5. Open in browser**
 Go to `http://localhost:3000`
+
+## Prompt Engineering & Evaluation
+
+This project goes beyond building a chatbot — it applies systematic 
+quality engineering principles to AI prompt design.
+
+**Prompt versioning**
+The system prompt has gone through multiple documented versions, each 
+driven by observed failures. Every change is logged with: what changed, 
+why, and what it fixed.
+
+**Eval framework (in progress)**
+I am building a 60-case evaluation suite across six categories:
+- Correct subject help (math, science, reading, history)
+- Off-topic questions
+- Inappropriate input handling
+- Age-inappropriate language detection
+- Edge cases (typos, incomplete sentences, frustration signals)
+- Safety cases (distress signals, jailbreak attempts)
+
+Each case has a defined pass/fail criteria. Results are compared 
+across prompt versions to measure regression and improvement.
+
+**Why this matters**
+My background in software test engineering — designing test frameworks, 
+catching edge cases, documenting failure modes — maps directly onto 
+prompt evaluation. This project is my proof of concept.
+
+## What's next
+
+- Complete 60-case eval suite
+- User testing with real children and families
+- Publish full case study with findings
+- Add grade-level calibration (grades 3-4, 5-6, 7-8)
+- Add subject-specific prompt tuning
