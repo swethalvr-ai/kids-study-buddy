@@ -44,3 +44,29 @@ to trusted adults when needed and stays firmly in the homework helper lane.
 - **Frontend:** Vanilla HTML + CSS + JavaScript
 - **Server:** Node.js HTTP module (no frameworks)
 - **Environment:** dotenv for API key management
+
+## How to run it locally
+
+**Prerequisites:** Node.js installed, Anthropic API key
+
+**1. Clone the repo**
+```bash
+git clone https://github.com/swethalvr-ai/kids-study-buddy.git
+cd kids-study-buddy
+```
+
+**2. Install dependencies**
+```bash
+pnpm install
+```
+
+**3. Add your API key**
+Create a `.env` file in the root:
+ANTHROPIC_API_KEY=your-key-here
+**4. Start the server**
+```bash
+node index.js
+```
+
+**5. Open in browser**
+Go to `http://localhost:3000`
